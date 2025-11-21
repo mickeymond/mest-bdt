@@ -1,64 +1,80 @@
-import { UploadCloud } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function AddCohort() {
   return (
-    <div className="flex items-center justify-center ">
-      <div className="bg-[#1E2939] rounded-2xl shadow-md p-8 w-full max-w-5xl flex flex-col h-[80vh]">
-        {/* Header on top */}
-        <h2 className="text-2xl font-semibold  mb-6 text-center">
-          Cohort Info
-        </h2>
-        <div className="flex flex-col md:flex-row flex-1 space-y-6 md:space-y-0 md:space-x-8">
-          {/* Left: Upload Box */}
-          <div className="flex-1 border-2 border-dashed border-blue-300 rounded-xl flex flex-col items-center justify-center text-center p-6">
-            <div className="text-blue-500 mb-2">
-              <UploadCloud height={32} width={40} />
-            </div>
-            <p className="text-gray-700 font-medium mb-1">Drop file here</p>
-            <p className="text-gray-500 mb-2">OR</p>
-            <label className="bg-blue-500 text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition cursor-pointer">
-              Upload File
-              <input
-                type="file"
-                accept=".png,.jpg,.jpeg,.pdf"
-                className="hidden"
-              />
-            </label>
-            <p className="text-sm text-gray-400 mt-2">
-              Only PNG, JPG and PDF files are supported
-            </p>
-          </div>
+    <div className="bg-gray-100 rounded-lg p-4 sm:p-6 w-full min-h-screen flex ">
+      <div className="w-full ">
+        <div className="inline-block">
+          {/* Back Navigation */}
+          <Link
+            href={"/cohorts"}
+            className="flex items-center gap-2 rounded-lg text-sm text-black hover:bg-gray-300 px-3 py-2 transition-all duration-200"
+          >
+            <ArrowLeft
+              size={18}
+              className="transition-transform duration-200 group-hover:-translate-x-1"
+            />
+            Back to cohorts
+          </Link>
+        </div>
 
-          {/* Right: Form */}
-          <div className="flex-1 flex flex-col justify-between">
-            <div>
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-2 text-sm">
+        {/* Add Cohort Form */}
+        <div className="mt-6 bg-white p-4 sm:p-6 shadow-lg rounded-lg text-black">
+          <h1 className="text-xl font-bold text-center sm:text-left">
+            Add New Cohort
+          </h1>
+          <p className="mt-2 text-gray-700 text-sm text-center sm:text-left">
+            Create a new cohort by filling out the information below
+          </p>
+          <div className="w-full mx-auto mt-6">
+            <form className="space-y-6 mt-4">
+              {/* Cohort Name */}
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-700 font-semibold">
                   Cohort Name
+                  <span className="text-red-700">*</span>
                 </label>
                 <input
                   type="text"
-                  placeholder="Enter cohort name"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-blue-400 outline-none"
+                  placeholder="e.g., 2025 Spring Cohort"
+                  className="bg-gray-200 px-2 py-3 rounded-lg text-sm border border-gray-400"
                 />
               </div>
-
-              <div className="mb-4">
-                <label className="block text-gray-600 mb-2 text-sm">
-                  Description
+              {/* Cohort Description */}
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-700 font-semibold">
+                  Cohort Description
+                  <span className="text-red-700">*</span>
                 </label>
                 <textarea
-                  placeholder="Cohort description"
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 h-24 focus:ring-2 focus:ring-blue-400 outline-none"
-                ></textarea>
+                  placeholder="Provide a detailed description of the cohort..."
+                  className="bg-gray-100 px-2 py-3 rounded-lg text-sm border border-gray-400"
+                  rows={5}
+                />
               </div>
-            </div>
-            {/* Submit Button */}
-            <div className="flex justify-end">
-              <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition cursor-pointer">
-                Submit
-              </button>
-            </div>
+              {/* Upload Image */}
+              <div className="flex flex-col">
+                <label className="text-sm text-gray-700 font-semibold">
+                  Upload Image
+                  <span className="text-gray-400 ml-1">(Optional)</span>
+                </label>
+                <input
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  className="bg-gray-100 px-2 py-3 rounded-lg text-sm  border border-gray-400"
+                />
+              </div>
+              {/* Buttons */}
+              <div className="flex flex-col sm:flex-row justify-end gap-4 mt-6">
+                <button className="bg-black text-white px-4 py-2 rounded-lg cursor-pointer w-full sm:w-auto">
+                  Add Cohort
+                </button>
+                <div className="px-4 py-2 rounded-lg border border-gray-600 cursor-pointer w-full sm:w-auto text-center">
+                  Cancel
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
