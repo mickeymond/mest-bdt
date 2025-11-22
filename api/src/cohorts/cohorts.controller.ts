@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -18,12 +19,14 @@ import {
 import { CohortsService } from './cohorts.service';
 import { CreateCohortDto } from './dto/create-cohort.dto';
 import { UpdateCohortDto } from './dto/update-cohort.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 @ApiTags('cohorts')
 @Controller('cohorts')
 export class CohortsController {
   constructor(private readonly cohortsService: CohortsService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   @ApiCreatedResponse({
     description: 'The cohort has been successfully created.',
@@ -41,6 +44,11 @@ export class CohortsController {
     return this.cohortsService.findAll(filter);
   }
 
+  @Get('count')
+  countDocuments(@Query() filter: JSON) {
+    return this.cohortsService.countDocuments(filter);
+  }
+
   @Get(':id')
   @ApiOkResponse({ description: 'The cohort has been successfully found.' })
   @ApiNotFoundResponse({
@@ -50,6 +58,7 @@ export class CohortsController {
     return this.cohortsService.findOne({ _id: id });
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   @ApiOkResponse({ description: 'The cohort has been successfully updated.' })
   @ApiNotFoundResponse({
@@ -60,6 +69,7 @@ export class CohortsController {
     return this.cohortsService.updateOne({ _id: id }, updateCohortDto);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOkResponse({ description: 'The cohort has been successfully deleted.' })
   @ApiNotFoundResponse({

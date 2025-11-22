@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
@@ -18,12 +19,14 @@ import {
 import { ProgramsService } from './programs.service';
 import { UpdateProgramDto } from './dto/update-program.dto';
 import { CreateProgramDto } from './dto/create-program.dto';
+import { AuthGuard } from '../common/guards/auth.guard';
 
 @ApiTags('programs')
 @Controller('programs')
 export class ProgramsController {
   constructor(private readonly programsService: ProgramsService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   @ApiCreatedResponse({
     description: 'The program has been successfully created.',
@@ -31,6 +34,11 @@ export class ProgramsController {
   @ApiBadRequestResponse({ description: 'Invalid input data provided.' })
   create(@Body() createProgramDto: CreateProgramDto) {
     return this.programsService.create(createProgramDto);
+  }
+
+  @Get('count')
+  countDocuments(@Query() filter: JSON) {
+    return this.programsService.countDocuments(filter);
   }
 
   @Get()
@@ -50,6 +58,7 @@ export class ProgramsController {
     return this.programsService.findOne({ _id: id });
   }
 
+  @UseGuards(AuthGuard)
   @Patch(':id')
   @ApiOkResponse({ description: 'The program has been successfully updated.' })
   @ApiNotFoundResponse({
@@ -63,6 +72,7 @@ export class ProgramsController {
     return this.programsService.updateOne({ _id: id }, updateProgramDto);
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOkResponse({ description: 'The program has been successfully deleted.' })
   @ApiNotFoundResponse({
