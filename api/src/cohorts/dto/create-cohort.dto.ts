@@ -1,7 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDateString } from 'class-validator';
+import { IsDateString, IsMongoId } from 'class-validator';
 
 export class CreateCohortDto {
+  @IsMongoId()
+  @ApiProperty()
+  program: string;
+
   @ApiProperty({
     description: 'The name of the cohort.',
     example: 'Cohort 1',

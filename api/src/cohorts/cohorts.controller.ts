@@ -33,6 +33,8 @@ export class CohortsController {
   })
   @ApiBadRequestResponse({ description: 'Invalid input data provided.' })
   create(@Body() createCohortDto: CreateCohortDto) {
+    // TODO: Ensure program used to create cohort exist
+    // Create and return cohort
     return this.cohortsService.create(createCohortDto);
   }
 
@@ -40,13 +42,13 @@ export class CohortsController {
   @ApiOkResponse({
     description: 'The cohorts have been successfully found.',
   })
-  findAll(@Query() filter: JSON) {
-    return this.cohortsService.findAll(filter);
+  findAll(@Query() { filter = '{}' }: { filter: string }) {
+    return this.cohortsService.findAll(JSON.parse(filter));
   }
 
   @Get('count')
-  countDocuments(@Query() filter: JSON) {
-    return this.cohortsService.countDocuments(filter);
+  countDocuments(@Query() { filter = '{}' }: { filter: string }) {
+    return this.cohortsService.countDocuments(JSON.parse(filter));
   }
 
   @Get(':id')

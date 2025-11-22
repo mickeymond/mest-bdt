@@ -36,17 +36,17 @@ export class ProgramsController {
     return this.programsService.create(createProgramDto);
   }
 
-  @Get('count')
-  countDocuments(@Query() filter: JSON) {
-    return this.programsService.countDocuments(filter);
-  }
-
   @Get()
   @ApiOkResponse({
     description: 'The programs have been successfully found.',
   })
-  findAll(@Query() filter: JSON) {
-    return this.programsService.findAll(filter);
+  findAll(@Query() { filter = '{}' }: { filter: string }) {
+    return this.programsService.findAll(JSON.parse(filter));
+  }
+
+  @Get('count')
+  countDocuments(@Query() { filter = '{}' }: { filter: string }) {
+    return this.programsService.countDocuments(JSON.parse(filter));
   }
 
   @Get(':id')
